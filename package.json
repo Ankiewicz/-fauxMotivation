@@ -1,0 +1,25 @@
+{
+  "name": "fauxmotivation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "heroku local"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ankiewicz/-fauxMotivation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ankiewicz/-fauxMotivation/issues"
+  },
+  "homepage": "https://github.com/Ankiewicz/-fauxMotivation#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "twit": "^2.2.9"
+  }
+}
