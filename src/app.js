@@ -20,7 +20,10 @@ import axios from 'axios'
   }
 
   handleSubmit(event) {
-    axios.get('/getUserTweets')
+    axios.get('/getUserTweets',{
+    params: {
+      user_tweet_name: this.state.value
+    }})
       .then(function (response) {
         console.log(response.data);
       })

@@ -1664,7 +1664,10 @@ var NameForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
-      _axios2.default.get('/getUserTweets').then(function (response) {
+      _axios2.default.get('/getUserTweets', {
+        params: {
+          user_tweet_name: this.state.value
+        } }).then(function (response) {
         console.log(response.data);
       }).catch(function (error) {
         console.log(error);
