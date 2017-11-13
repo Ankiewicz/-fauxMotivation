@@ -1651,8 +1651,8 @@ var NameForm = function (_React$Component) {
 
     _this.state = {
       value: '',
-      tweetErrorMessage: null,
-      originTweet: 'loading...'
+      originTweet: 'loading...',
+      newMarkovTweet: 'waiting...'
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -1687,7 +1687,49 @@ var NameForm = function (_React$Component) {
   }, {
     key: 'markovThis',
     value: function markovThis() {
-      console.log('markov this stuff right here');
+      var tweet = this.state.originTweet;
+      var tweetMarkovPossibilties = {};
+      for (var i = 0; i < tweet.length; i++) {
+        var markovPairs = tweet.substring(i, i + 2);
+        if (!tweetMarkovPossibilties[tweet[i]]) {
+          tweetMarkovPossibilties[tweet[i]] = [];
+        }
+        tweetMarkovPossibilties[tweet[i]].push(markovPairs);
+      }
+      this.printNewMarkov(tweetMarkovPossibilties);
+    }
+  }, {
+    key: 'printNewMarkov',
+    value: function printNewMarkov(tweetMarkovPossibilties) {
+      console.log('tweetMarkovPossibilties ', tweetMarkovPossibilties);
+      // get random place to start
+      var randomPlaceInString = Math.random() * (this.state.originTweet.length - 0); // random number within the size of the originalTweet
+      var startValueLetter = this.state.originTweet.substring(randomPlaceInString, randomPlaceInString - 1); // random letter from originTweet
+      var printValue = tweetMarkovPossibilties[startValueLetter]; // random value from tweetMarkovPossibilties
+
+      console.log(startValueLetter, ' = ', printValue);
+      console.log('first value', startValueLetter);
+      // grab second value in print
+
+      console.log('printValue.length', printValue.length);
+      var randomPlaceInArray = Math.round(Math.random() * (printValue.length - 0) + 0);
+      console.log('randomPlaceInArray', randomPlaceInArray);
+      var randomSecondValueFromArray = printValue[randomPlaceInArray];
+      var secondValueFromArrayValue = randomSecondValueFromArray.substring(1);
+      console.log('randomSecondValueFromArray', randomSecondValueFromArray.substring(1));
+      // if no second value return a space
+      if (!secondValueFromArrayValue) {
+        secondValueFromArrayValue = ' space ';
+      }
+      var returningSecondValue = randomSecondValueFromArray.randomPlaceInArray.substring(1);
+      console.log('returningSecondValue', returningSecondValue);
+      // let nextValue = tweet
+
+      // console.log('tweetMarkovPossibilties', startValueLetter, 'next value', nextValue)
+
+      for (var i = 0; i < 10; i++) {
+        // console.log(tweetMarkovPossibilties[startValueLetter])
+      }
     }
   }, {
     key: 'render',
@@ -1711,6 +1753,17 @@ var NameForm = function (_React$Component) {
           { className: 'originTweet' },
           ' ',
           this.state.originTweet
+        ),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'New Markov Tweet'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'originTweet' },
+          ' ',
+          this.state.newMarkovTweet
         )
       );
     }
