@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack && node index.js",
+    "start": "node index.js",
+    "push": "webpack && git add . && git commit -m \"pushing new build\" && git push",
     "dev": "heroku local"
   },
   "repository": {
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/Ankiewicz/-fauxMotivation#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "express": "^4.16.2",
     "path": "^0.12.7",
     "react": "^16.1.0",
