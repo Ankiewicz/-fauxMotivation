@@ -7,7 +7,7 @@ const path = require('path')
 app.use( express.static( path.join( __dirname, 'public' ) ) )
 
 
-app.get('/', (req, res) => {
+app.get('/getUserTweets', (req, res) => {
   T.get('statuses/user_timeline', { screen_name: 'FauxMotivation', count: 2 },  function (err, data, response) {
     res.send(data)
   })

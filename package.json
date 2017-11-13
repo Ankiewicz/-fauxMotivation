@@ -1,13 +1,13 @@
 {
   "name": "fauxmotivation",
   "version": "1.0.0",
-  "description": "",
+  "description": "Markov Chain Code Challenge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "push": "webpack && git add . && git commit -m \"pushing new build\" && git push",
-    "dev": "heroku local"
+    "dev": "webpack && heroku local"
   },
   "repository": {
     "type": "git",
