@@ -1702,6 +1702,11 @@ var NameForm = function (_React$Component) {
           _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
         ),
         _react2.default.createElement(
+          'h3',
+          null,
+          'Original Tweet'
+        ),
+        _react2.default.createElement(
           'div',
           { className: 'originTweet' },
           ' ',

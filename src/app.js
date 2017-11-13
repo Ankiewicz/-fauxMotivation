@@ -49,7 +49,7 @@ import axios from 'axios'
           <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="twitter name"/>
         <input type="submit" value="Submit" />
       </form>
-      
+      <h3>Original Tweet</h3>
       <div className="originTweet"> {this.state.originTweet}</div>
       
     </div>
