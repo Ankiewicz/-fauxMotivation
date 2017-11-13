@@ -1649,7 +1649,11 @@ var NameForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (NameForm.__proto__ || Object.getPrototypeOf(NameForm)).call(this, props));
 
-    _this.state = { value: '' };
+    _this.state = {
+      value: '',
+      tweetErrorMessage: null,
+      originTweet: 'loading...'
+    };
 
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -1664,30 +1668,45 @@ var NameForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       _axios2.default.get('/getUserTweets', {
         params: {
           user_tweet_name: this.state.value
         } }).then(function (response) {
-        console.log(response.data);
+        _this2.setState({ originTweet: response.data[0].text });
+        _this2.markovThis();
       }).catch(function (error) {
         console.log(error);
+        if (error) {
+          _this2.setState({ originTweet: 'failed getting the tweet' });
+        }
       });
-
       event.preventDefault();
+    }
+  }, {
+    key: 'markovThis',
+    value: function markovThis() {
+      console.log('markov this stuff right here');
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'form',
-        { onSubmit: this.handleSubmit },
+        'div',
+        { className: 'container' },
         _react2.default.createElement(
-          'label',
-          null,
-          'Name:',
-          _react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange })
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange, placeholder: 'twitter name' }),
+          _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
         ),
-        _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+        _react2.default.createElement(
+          'div',
+          { className: 'originTweet' },
+          ' ',
+          this.state.originTweet
+        )
       );
     }
   }]);
