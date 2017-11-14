@@ -34,12 +34,13 @@ import axios from 'axios'
       })
     event.preventDefault();
   }
-  
+
   markovThis () {
     let tweet = this.state.originTweet
     let tweetMarkovPossibilties = {}
     for (var i = 0; i < tweet.length; i++) {
       let markovPairs = tweet.substring(i, i + 2)
+      console.log('markovPairs', markovPairs)
       if(!tweetMarkovPossibilties[tweet[i]]){
         tweetMarkovPossibilties[tweet[i]] = []
       }
@@ -47,39 +48,37 @@ import axios from 'axios'
     }
     this.printNewMarkov(tweetMarkovPossibilties)
   }
-  
+
   printNewMarkov (tweetMarkovPossibilties) {
     console.log('tweetMarkovPossibilties ', tweetMarkovPossibilties)
+    let markovTweetToPrintOut
+    // console.log('starting point originalTweet string key', startValueLetter )
     // get random place to start
-    let randomPlaceInString = Math.random() * (this.state.originTweet.length - 0) // random number within the size of the originalTweet
-    let startValueLetter = this.state.originTweet.substring(randomPlaceInString, randomPlaceInString - 1) // random letter from originTweet
-    let printValue = tweetMarkovPossibilties[startValueLetter] // random value from tweetMarkovPossibilties
-    
-    console.log(startValueLetter, ' = ', printValue)
-    console.log('first value', startValueLetter)
-    // grab second value in print
-    
-    console.log('printValue.length', printValue.length)
-    let randomPlaceInArray = Math.round(Math.random() * (printValue.length - 0) + 0)
-    console.log('randomPlaceInArray', randomPlaceInArray)
-    let randomSecondValueFromArray = printValue[randomPlaceInArray]
-    let secondValueFromArrayValue = randomSecondValueFromArray.substring(1)
-    console.log('randomSecondValueFromArray', randomSecondValueFromArray.substring(1))
-    // if no second value return a space
-    if(!secondValueFromArrayValue) {
-      secondValueFromArrayValue = ' space '
-    }
-    let returningSecondValue = randomSecondValueFromArray.randomPlaceInArray.substring(1)
-    console.log('returningSecondValue', returningSecondValue)
-    // let nextValue = tweet
-    
-    // console.log('tweetMarkovPossibilties', startValueLetter, 'next value', nextValue)
-      
-      for (var i = 0; i < 10; i++) {
-        // console.log(tweetMarkovPossibilties[startValueLetter])
+
+
+    const getValue = () => {
+      for (var i = 0; i < this.state.originTweet.length; i++) {
+        // get last letter in markovTweetToPrintOut
+        let arrayOfLetter = tweetMarkovPossibilties[markovTweetToPrintOut.substring(markovTweetToPrintOut.length - 1)]
+        // if array only has one value
+        let randomNumberFromArrayObj = arrayOfLetter.length === 1 ? 0 : Math.floor((Math.random() * arrayOfLetter.length) + 0)
+        markovTweetToPrintOut += arrayOfLetter[randomNumberFromArrayObj]
       }
+      console.log(markovTweetToPrintOut)
+    }
+
+    // starts markov string
+    let randomPlaceInoriginTweetString = Math.floor((Math.random() * this.state.originTweet.length) + 1) // random number within the size of the originalTweet
+    let startValueLetter = this.state.originTweet.substr(randomPlaceInoriginTweetString, 1) // random letter from originalTweet
+    markovTweetToPrintOut = startValueLetter
+    //get intial value
+    getValue()
+
+    console.log('===================')
+    console.log('new tweet chain: ', markovTweetToPrintOut)
+    console.log('===================')
   }
-  
+
   render() {
     return (
     <div className="container">
