@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|Josefin+Sans');
+
+* {
+  color: #565656;
+  text-align: center;
+  font-family: 'Josefin Sans', sans-serif;
+}
+body {
+  background: #41C1E8;
+}
+
+h1, h2, h3, h4, h5, h6, .h1Tiny  {
+  font-family: 'Baloo Bhaijaan', cursive;
+  color: #565656;
+}
+
+h1,
+.h1Tiny {
+  font-size: 48px;
+  line-height: 54px;
+}
+.h1Tiny {
+  font-weight: lighter;
+  color: #6b6a6a;
+}
+a,
+a:visited,
+a:hover{
+  text-decoration: none;
+}
+
+p {
+  color: #6b6a6a;
+  font-size: 13px;
+}
+input {
+  width: 90%;
+  height: 52px;
+  margin:15px;
+  font-size: 28px;
+  font-weight: lighter;
+  border: none;
+  border-radius: 3px;
+}
+.button {
+  width: 50%;
+  background: none;
+  color: #fff;
+}
+.button:hover {
+  background: #96e2f9;
+}
+.button:focus {
+  outline: none;
+}
+.container {
+  width: 90%;
+  max-width: 600px;
+  height: 70%;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.footNote a,
+.footNote {
+  font-family: sans-serif;
+  font-weight: lighter;
+  letter-spacing: .5px;
+  color: #8a8585;
+  font-style: italic;
+}
+
+.footNote {
+  font-size: 10px;
+  position: relative;
+  line-height: 12px;
+  top: -10px;
+  float: right;
+  right: 6%;
+
+}

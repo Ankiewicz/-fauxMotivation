@@ -77,13 +77,20 @@ import axios from 'axios'
   render() {
     return (
     <div className="container">
+      <h1> <span className="h1Tiny">Turn Your Tweet into a </span><br/> Markov Chain Tweet</h1>
+      <p> We will grab the latest tweet from a twitter user of your choice. We will work some magic and output a new tweet created by processing the original tweet through a Markov Chain Generator. <br/>
+      You can find a great explaination of what a Markov Chain is here <a href="http://setosa.io/ev/markov-chains/">etosa.io/ev/markov-chains/</a></p>
       <form onSubmit={this.handleSubmit}>
-          <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="twitter name"/>
-        <input type="submit" value="Submit" />
+          <input className="input"  type="text" value={this.state.value} onChange={this.handleChange} placeholder="twitter name"/> <br/>
+          <span className="footNote">
+            This form defaults to user <a href="https://twitter.com/FauxMotivation">@FauxMotivation</a>
+          </span>
+          <br/>
+        <input className="button"  type="submit" value="Submit" />
       </form>
-      <h3>Original Tweet</h3>
+      <h2>Original Tweet</h2>
       <div className="originTweet"> {this.state.originTweet}</div>
-      <h3>New Markov Tweet</h3>
+      <h2>New Markov Tweet</h2>
       <div className="originTweet"> {this.state.newMarkovTweet}</div>
     </div>
     );
