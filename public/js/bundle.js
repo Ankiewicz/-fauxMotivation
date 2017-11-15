@@ -1689,48 +1689,41 @@ var NameForm = function (_React$Component) {
     value: function markovThis() {
       var tweet = this.state.originTweet;
       var tweetMarkovPossibilties = {};
-      for (var i = 0; i >= tweet.length; i++) {
-        var markovPairs = tweet.substring(i, i + 2);
-        console.log('markovPairs', markovPairs);
-        if (!tweetMarkovPossibilties[tweet[i]]) {
-          tweetMarkovPossibilties[tweet[i]] = [];
+      var numChar = 3;
+
+      for (var i = 0; i <= tweet.length - numChar; i++) {
+        var markovPairs = tweet.substring(i, i + numChar);
+        if (!tweetMarkovPossibilties[markovPairs]) {
+          tweetMarkovPossibilties[markovPairs] = [];
         }
-        tweetMarkovPossibilties[tweet[i]].push(markovPairs);
+        tweetMarkovPossibilties[markovPairs].push(tweet.charAt(i + numChar));
       }
-      this.printNewMarkov(tweetMarkovPossibilties);
+      this.printNewMarkov(tweetMarkovPossibilties, numChar);
     }
   }, {
     key: 'printNewMarkov',
-    value: function printNewMarkov(tweetMarkovPossibilties) {
+    value: function printNewMarkov(tweetMarkovPossibilties, numChar) {
       var _this3 = this;
 
-      console.log('tweetMarkovPossibilties ', tweetMarkovPossibilties);
-      var markovTweetToPrintOut = void 0;
-      // console.log('starting point originalTweet string key', startValueLetter )
-      // get random place to start
-
-
       var getValue = function getValue() {
+        var randomPlaceInOriginTweetString = Math.floor(Math.random() * _this3.state.originTweet.length + 1);
+        var startValueLetter = _this3.state.originTweet.substring(randomPlaceInOriginTweetString, randomPlaceInOriginTweetString + numChar);
+        var startingString = startValueLetter;
+        var markovTweetToPrintOut = startingString;
+
         for (var i = 0; i < _this3.state.originTweet.length; i++) {
-          // get last letter in markovTweetToPrintOut
-          var arrayOfLetter = tweetMarkovPossibilties[markovTweetToPrintOut.substring(markovTweetToPrintOut.length - 1)];
-          // if array only has one value
-          var randomNumberFromArrayObj = arrayOfLetter.length === 1 ? 0 : Math.floor(Math.random() * arrayOfLetter.length + 0);
-          markovTweetToPrintOut += arrayOfLetter[randomNumberFromArrayObj];
+          var randomNumberFromArrayObj = startingString.length === 1 ? Math.floor(Math.random() * startingString.length + 0) : 0;
+          var nextArr = tweetMarkovPossibilties[startingString];
+          console.log('nextArr', nextArr);
+          var next = nextArr[randomNumberFromArrayObj];
+          var poss = next;
+
+          markovTweetToPrintOut += poss;
+          startingString = markovTweetToPrintOut.substring(markovTweetToPrintOut.length - numChar, markovTweetToPrintOut.length);
         }
-        console.log(markovTweetToPrintOut);
+        _this3.setState({ newMarkovTweet: markovTweetToPrintOut });
       };
-
-      // starts markov string
-      var randomPlaceInoriginTweetString = Math.floor(Math.random() * this.state.originTweet.length + 1); // random number within the size of the originalTweet
-      var startValueLetter = this.state.originTweet.substr(randomPlaceInoriginTweetString, 1); // random letter from originalTweet
-      markovTweetToPrintOut = startValueLetter;
-      //get intial value
       getValue();
-
-      console.log('===================');
-      console.log('new tweet chain: ', markovTweetToPrintOut);
-      console.log('===================');
     }
   }, {
     key: 'render',
