@@ -1732,13 +1732,50 @@ var NameForm = function (_React$Component) {
         'div',
         { className: 'container' },
         _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit },
-          _react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange, placeholder: 'twitter name' }),
-          _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+          'h1',
+          null,
+          ' ',
+          _react2.default.createElement(
+            'span',
+            { className: 'h1Tiny' },
+            'Turn Your Tweet into a '
+          ),
+          _react2.default.createElement('br', null),
+          ' Markov Chain Tweet'
         ),
         _react2.default.createElement(
-          'h3',
+          'p',
+          null,
+          ' We will grab the latest tweet from a twitter user of your choice. We will work some magic and output a new tweet created by processing the original tweet through a Markov Chain Generator. ',
+          _react2.default.createElement('br', null),
+          'You can find a great explaination of what a Markov Chain is here ',
+          _react2.default.createElement(
+            'a',
+            { href: 'http://setosa.io/ev/markov-chains/' },
+            'etosa.io/ev/markov-chains/'
+          )
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { className: 'input', type: 'text', value: this.state.value, onChange: this.handleChange, placeholder: 'twitter name' }),
+          ' ',
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'span',
+            { className: 'footNote' },
+            'This form defaults to user ',
+            _react2.default.createElement(
+              'a',
+              { href: 'https://twitter.com/FauxMotivation' },
+              '@FauxMotivation'
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { className: 'button', type: 'submit', value: 'Submit' })
+        ),
+        _react2.default.createElement(
+          'h2',
           null,
           'Original Tweet'
         ),
@@ -1749,7 +1786,7 @@ var NameForm = function (_React$Component) {
           this.state.originTweet
         ),
         _react2.default.createElement(
-          'h3',
+          'h2',
           null,
           'New Markov Tweet'
         ),
