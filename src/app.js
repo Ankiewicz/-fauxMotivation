@@ -89,15 +89,9 @@ import axios from 'axios'
         <input className="button"  type="submit" value="Submit" />
       </form>
       <h2>Original Tweet</h2>
-<<<<<<< Updated upstream
-      <div className="originTweet"> {this.state.originTweet}</div>
-      <h2>New Markov Tweet</h2>
-      <div className="originTweet"> {this.state.newMarkovTweet}</div>
-=======
       <p className="originTweet"> {this.state.originTweet}</p>
       <h2>New Markov Tweet</h2>
       <p className="originTweet"> {this.state.newMarkovTweet}</p>
->>>>>>> Stashed changes
     </div>
     );
   }
