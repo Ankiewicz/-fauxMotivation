@@ -1651,8 +1651,8 @@ var NameForm = function (_React$Component) {
 
     _this.state = {
       value: '',
-      tweetErrorMessage: null,
-      originTweet: 'loading...'
+      originTweet: 'loading...',
+      newMarkovTweet: 'waiting...'
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -1687,7 +1687,43 @@ var NameForm = function (_React$Component) {
   }, {
     key: 'markovThis',
     value: function markovThis() {
-      console.log('markov this stuff right here');
+      var tweet = this.state.originTweet;
+      var tweetMarkovPossibilties = {};
+      var numChar = 3;
+
+      for (var i = 0; i <= tweet.length - numChar; i++) {
+        var markovPairs = tweet.substring(i, i + numChar);
+        if (!tweetMarkovPossibilties[markovPairs]) {
+          tweetMarkovPossibilties[markovPairs] = [];
+        }
+        tweetMarkovPossibilties[markovPairs].push(tweet.charAt(i + numChar));
+      }
+      this.printNewMarkov(tweetMarkovPossibilties, numChar);
+    }
+  }, {
+    key: 'printNewMarkov',
+    value: function printNewMarkov(tweetMarkovPossibilties, numChar) {
+      var _this3 = this;
+
+      var getValue = function getValue() {
+        var randomPlaceInOriginTweetString = Math.floor(Math.random() * _this3.state.originTweet.length + 1);
+        var startValueLetter = _this3.state.originTweet.substring(randomPlaceInOriginTweetString, randomPlaceInOriginTweetString + numChar);
+        var startingString = startValueLetter;
+        var markovTweetToPrintOut = startingString;
+
+        for (var i = 0; i < _this3.state.originTweet.length; i++) {
+          var randomNumberFromArrayObj = startingString.length === 1 ? Math.floor(Math.random() * startingString.length + 0) : 0;
+          var nextArr = tweetMarkovPossibilties[startingString];
+          console.log('nextArr', nextArr);
+          var next = nextArr[randomNumberFromArrayObj];
+          var poss = next;
+
+          markovTweetToPrintOut += poss;
+          startingString = markovTweetToPrintOut.substring(markovTweetToPrintOut.length - numChar, markovTweetToPrintOut.length);
+        }
+        _this3.setState({ newMarkovTweet: markovTweetToPrintOut });
+      };
+      getValue();
     }
   }, {
     key: 'render',
@@ -1711,6 +1747,17 @@ var NameForm = function (_React$Component) {
           { className: 'originTweet' },
           ' ',
           this.state.originTweet
+        ),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'New Markov Tweet'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'originTweet' },
+          ' ',
+          this.state.newMarkovTweet
         )
       );
     }

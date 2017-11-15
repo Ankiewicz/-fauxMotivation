@@ -2,17 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios'
 
-
-
-
-  
   class NameForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: '',
-      tweetErrorMessage: null,
-      originTweet: 'loading...'
+      originTweet: 'loading...',
+      newMarkovTweet: 'waiting...'
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,10 +34,46 @@ import axios from 'axios'
       })
     event.preventDefault();
   }
-  
+
   markovThis () {
-    console.log('markov this stuff right here')
+    let tweet = this.state.originTweet
+    let tweetMarkovPossibilties = {}
+    let numChar = 3
+
+    for (var i = 0; i <= tweet.length - numChar; i++) {
+      let markovPairs = tweet.substring(i, i + numChar)
+      if(!tweetMarkovPossibilties[markovPairs]){
+        tweetMarkovPossibilties[markovPairs] = []
+      }
+      tweetMarkovPossibilties[markovPairs].push(tweet.charAt( i +  numChar))
+    }
+    this.printNewMarkov(tweetMarkovPossibilties, numChar)
   }
+
+  printNewMarkov (tweetMarkovPossibilties, numChar) {
+
+    const getValue = () => {
+      let randomPlaceInOriginTweetString = Math.floor((Math.random() * this.state.originTweet.length) + 1)
+      let startValueLetter = this.state.originTweet.substring(randomPlaceInOriginTweetString, randomPlaceInOriginTweetString + numChar)
+      let startingString = startValueLetter
+      let markovTweetToPrintOut = startingString
+
+      for (var i = 0; i < this.state.originTweet.length; i++) {
+        let randomNumberFromArrayObj = startingString.length === 1 ?  Math.floor((Math.random() * startingString.length) + 0) : 0
+        let nextArr = tweetMarkovPossibilties[startingString]
+        console.log('nextArr', nextArr)
+        let next = nextArr[randomNumberFromArrayObj]
+        let poss = next
+
+        markovTweetToPrintOut += poss
+        startingString = markovTweetToPrintOut.substring(markovTweetToPrintOut.length - numChar, markovTweetToPrintOut.length)
+      }
+      this.setState({newMarkovTweet: markovTweetToPrintOut})
+    }
+      getValue()
+
+  }
+
   render() {
     return (
     <div className="container">
@@ -51,7 +83,8 @@ import axios from 'axios'
       </form>
       <h3>Original Tweet</h3>
       <div className="originTweet"> {this.state.originTweet}</div>
-      
+      <h3>New Markov Tweet</h3>
+      <div className="originTweet"> {this.state.newMarkovTweet}</div>
     </div>
     );
   }
