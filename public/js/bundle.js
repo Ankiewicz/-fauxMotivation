@@ -1780,7 +1780,7 @@ var NameForm = function (_React$Component) {
           'Original Tweet'
         ),
         _react2.default.createElement(
-          'div',
+          'p',
           { className: 'originTweet' },
           ' ',
           this.state.originTweet
@@ -1791,7 +1791,7 @@ var NameForm = function (_React$Component) {
           'New Markov Tweet'
         ),
         _react2.default.createElement(
-          'div',
+          'p',
           { className: 'originTweet' },
           ' ',
           this.state.newMarkovTweet
