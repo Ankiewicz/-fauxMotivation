@@ -88,3 +88,7 @@ input {
   float: right;
   right: 6%;
 }
+
+.saveTweet {
+  cursor: pointer;
+}
