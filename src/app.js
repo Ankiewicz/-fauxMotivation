@@ -6,7 +6,7 @@ import axios from 'axios'
   constructor(props) {
     super(props);
     this.state = {
-      value: '@FauxMotivation',
+      value: '',
       originTweet: 'loading...',
       newMarkovTweet: 'waiting...'
     };
@@ -84,12 +84,13 @@ import axios from 'axios'
         localStorage.removeItem("localStorageTest");
       } catch (e) {
         privateMode = false;
-        alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to join everyone");
+        alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to save tweets");
       }
     }
+
     if(privateMode) {
       let moreKeys = 0
-      let key = this.state.value
+      let key = this.state.value || '@FauxMotivation'
       let valueT = this.state.newMarkovTweet
       let canIPrintNow = true
 

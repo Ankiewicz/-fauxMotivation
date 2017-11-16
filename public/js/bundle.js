@@ -1652,7 +1652,7 @@ var NameForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (NameForm.__proto__ || Object.getPrototypeOf(NameForm)).call(this, props));
 
     _this.state = {
-      value: '@FauxMotivation',
+      value: '',
       originTweet: 'loading...',
       newMarkovTweet: 'waiting...'
     };
@@ -1765,13 +1765,18 @@ var NameForm = function (_React$Component) {
             localStorage.setItem(key, valueT);
           } else {
             moreKeys++;
+            // TODO: better naming,
+            // remove numbers after _,
+            // convert to number,
+            // add 1,
+            // convert to string and concat back to name
             key = key + '_' + moreKeys;
             addMultiKeys();
           }
         };
 
         var moreKeys = 0;
-        var key = this.state.value;
+        var key = this.state.value || '@FauxMotivation';
         var valueT = this.state.newMarkovTweet;
         var canIPrintNow = true;
 
