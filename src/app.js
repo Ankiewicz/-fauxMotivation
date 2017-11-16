@@ -8,7 +8,8 @@ import axios from 'axios'
     this.state = {
       value: '',
       originTweet: 'loading...',
-      newMarkovTweet: 'waiting...'
+      newMarkovTweet: 'waiting...',
+      printLocalStorage: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -129,9 +130,21 @@ import axios from 'axios'
   printAllStoredLocalStorageTweets () {
     let keys = Object.keys(localStorage)
     let i = keys.length
+    let localStorageObj = {}
+
+
      while ( i-- ) {
-         console.log(keys[i] + ' = ' + localStorage.getItem(keys[i]))
+        localStorageObj[keys[i]] = localStorage.getItem(keys[i])
+
+        if(i === 0){
+          let localstorageString = JSON.stringify(localStorageObj)
+          this.setState({
+            printLocalStorage: localstorageString
+          })
+        }
      }
+
+
   }
   render() {
     return (
@@ -157,6 +170,8 @@ import axios from 'axios'
         <p>
           <span className="saveTweet" onClick={this.printAllStoredLocalStorageTweets}> Print All saved tweets to Console Log</span>
         </p>
+        <h2>Printing local storage here</h2>
+          <p className="originTweet"> {this.state.printLocalStorage}</p>
     </div>
     );
   }

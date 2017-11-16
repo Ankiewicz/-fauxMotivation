@@ -1654,7 +1654,8 @@ var NameForm = function (_React$Component) {
     _this.state = {
       value: '',
       originTweet: 'loading...',
-      newMarkovTweet: 'waiting...'
+      newMarkovTweet: 'waiting...',
+      printLocalStorage: ''
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -1789,8 +1790,17 @@ var NameForm = function (_React$Component) {
     value: function printAllStoredLocalStorageTweets() {
       var keys = Object.keys(localStorage);
       var i = keys.length;
+      var localStorageObj = {};
+
       while (i--) {
-        console.log(keys[i] + ' = ' + localStorage.getItem(keys[i]));
+        localStorageObj[keys[i]] = localStorage.getItem(keys[i]);
+
+        if (i === 0) {
+          var localstorageString = JSON.stringify(localStorageObj);
+          this.setState({
+            printLocalStorage: localstorageString
+          });
+        }
       }
     }
   }, {
@@ -1881,6 +1891,17 @@ var NameForm = function (_React$Component) {
             { className: 'saveTweet', onClick: this.printAllStoredLocalStorageTweets },
             ' Print All saved tweets to Console Log'
           )
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Printing local storage here'
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'originTweet' },
+          ' ',
+          this.state.printLocalStorage
         )
       );
     }
