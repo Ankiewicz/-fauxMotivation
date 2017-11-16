@@ -1619,6 +1619,8 @@ module.exports = Cancel;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(5);
@@ -1650,13 +1652,15 @@ var NameForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (NameForm.__proto__ || Object.getPrototypeOf(NameForm)).call(this, props));
 
     _this.state = {
-      value: '',
+      value: '@FauxMotivation',
       originTweet: 'loading...',
       newMarkovTweet: 'waiting...'
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.storeTweetsInLocalStorage = _this.storeTweetsInLocalStorage.bind(_this);
+    _this.printAllStoredLocalStorageTweets = _this.printAllStoredLocalStorageTweets.bind(_this);
     return _this;
   }
 
@@ -1705,6 +1709,8 @@ var NameForm = function (_React$Component) {
     value: function printNewMarkov(tweetMarkovPossibilties, numChar) {
       var _this3 = this;
 
+      console.log('Here is the possible markov chain options');
+      console.log(tweetMarkovPossibilties);
       var getValue = function getValue() {
         var randomPlaceInOriginTweetString = Math.floor(Math.random() * _this3.state.originTweet.length + 1);
         var startValueLetter = _this3.state.originTweet.substring(randomPlaceInOriginTweetString, randomPlaceInOriginTweetString + numChar);
@@ -1714,7 +1720,6 @@ var NameForm = function (_React$Component) {
         for (var i = 0; i < _this3.state.originTweet.length; i++) {
           var randomNumberFromArrayObj = startingString.length === 1 ? Math.floor(Math.random() * startingString.length + 0) : 0;
           var nextArr = tweetMarkovPossibilties[startingString];
-          console.log('nextArr', nextArr);
           var next = nextArr[randomNumberFromArrayObj];
           var poss = next;
 
@@ -1724,6 +1729,63 @@ var NameForm = function (_React$Component) {
         _this3.setState({ newMarkovTweet: markovTweetToPrintOut });
       };
       getValue();
+    }
+  }, {
+    key: 'storeTweetsInLocalStorage',
+    value: function storeTweetsInLocalStorage() {
+      var privateMode = true;
+      // Testing if browser is in private mode
+      if ((typeof localStorage === 'undefined' ? 'undefined' : _typeof(localStorage)) === "object") {
+        try {
+          localStorage.setItem('localStorageTest', 'true');
+          localStorage.removeItem("localStorageTest");
+        } catch (e) {
+          privateMode = false;
+          alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to join everyone");
+        }
+      }
+      if (privateMode) {
+        var addMultiKeys = function addMultiKeys() {
+          var keys = Object.keys(localStorage);
+          var i = keys.length;
+
+          while (i--) {
+            if (keys[i] === key) {
+              canIPrintNow = false;
+              _printNow();
+              return;
+            }
+            canIPrintNow = true;
+            _printNow();
+          }
+        };
+
+        var _printNow = function _printNow() {
+          if (canIPrintNow) {
+            localStorage.setItem(key, valueT);
+          } else {
+            moreKeys++;
+            key = key + '_' + moreKeys;
+            addMultiKeys();
+          }
+        };
+
+        var moreKeys = 0;
+        var key = this.state.value;
+        var valueT = this.state.newMarkovTweet;
+        var canIPrintNow = true;
+
+        addMultiKeys();
+      }
+    }
+  }, {
+    key: 'printAllStoredLocalStorageTweets',
+    value: function printAllStoredLocalStorageTweets() {
+      var keys = Object.keys(localStorage);
+      var i = keys.length;
+      while (i--) {
+        console.log(keys[i] + ' = ' + localStorage.getItem(keys[i]));
+      }
     }
   }, {
     key: 'render',
@@ -1795,6 +1857,24 @@ var NameForm = function (_React$Component) {
           { className: 'originTweet' },
           ' ',
           this.state.newMarkovTweet
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          _react2.default.createElement(
+            'span',
+            { className: 'saveTweet', onClick: this.storeTweetsInLocalStorage },
+            ' save new tweet'
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          _react2.default.createElement(
+            'span',
+            { className: 'saveTweet', onClick: this.printAllStoredLocalStorageTweets },
+            ' Print All saved tweets to Console Log'
+          )
         )
       );
     }

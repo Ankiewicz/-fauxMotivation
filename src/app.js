@@ -6,13 +6,15 @@ import axios from 'axios'
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      value: '@FauxMotivation',
       originTweet: 'loading...',
       newMarkovTweet: 'waiting...'
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.storeTweetsInLocalStorage = this.storeTweetsInLocalStorage.bind(this);
+    this.printAllStoredLocalStorageTweets = this.printAllStoredLocalStorageTweets.bind(this)
   }
 
   handleChange(event) {
@@ -51,7 +53,8 @@ import axios from 'axios'
   }
 
   printNewMarkov (tweetMarkovPossibilties, numChar) {
-
+    console.log('Here is the possible markov chain options')
+    console.log(tweetMarkovPossibilties)
     const getValue = () => {
       let randomPlaceInOriginTweetString = Math.floor((Math.random() * this.state.originTweet.length) + 1)
       let startValueLetter = this.state.originTweet.substring(randomPlaceInOriginTweetString, randomPlaceInOriginTweetString + numChar)
@@ -61,7 +64,6 @@ import axios from 'axios'
       for (var i = 0; i < this.state.originTweet.length; i++) {
         let randomNumberFromArrayObj = startingString.length === 1 ?  Math.floor((Math.random() * startingString.length) + 0) : 0
         let nextArr = tweetMarkovPossibilties[startingString]
-        console.log('nextArr', nextArr)
         let next = nextArr[randomNumberFromArrayObj]
         let poss = next
 
@@ -71,9 +73,65 @@ import axios from 'axios'
       this.setState({newMarkovTweet: markovTweetToPrintOut})
     }
       getValue()
-
   }
 
+  storeTweetsInLocalStorage () {
+    let privateMode = true
+    // Testing if browser is in private mode
+    if (typeof localStorage === "object") {
+      try {
+        localStorage.setItem('localStorageTest', 'true');
+        localStorage.removeItem("localStorageTest");
+      } catch (e) {
+        privateMode = false;
+        alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to join everyone");
+      }
+    }
+    if(privateMode) {
+      let moreKeys = 0
+      let key = this.state.value
+      let valueT = this.state.newMarkovTweet
+      let canIPrintNow = true
+
+      function addMultiKeys() {
+        let keys = Object.keys(localStorage)
+        let i = keys.length
+
+        while ( i-- ) {
+            if(keys[i] === key){
+              canIPrintNow = false
+              printNow()
+              return
+            }
+            canIPrintNow = true
+            printNow()
+        }
+      }
+      function printNow () {
+          if(canIPrintNow){
+            localStorage.setItem(key, valueT)
+          } else {
+            moreKeys++
+      // TODO: better naming,
+      // remove numbers after _,
+      // convert to number,
+      // add 1,
+      // convert to string and concat back to name
+            key = key + '_' + moreKeys
+            addMultiKeys()
+          }
+      }
+      addMultiKeys()
+    }
+  }
+
+  printAllStoredLocalStorageTweets () {
+    let keys = Object.keys(localStorage)
+    let i = keys.length
+     while ( i-- ) {
+         console.log(keys[i] + ' = ' + localStorage.getItem(keys[i]))
+     }
+  }
   render() {
     return (
     <div className="container">
@@ -89,9 +147,15 @@ import axios from 'axios'
         <input className="button"  type="submit" value="Submit" />
       </form>
       <h2>Original Tweet</h2>
-      <p className="originTweet"> {this.state.originTweet}</p>
+        <p className="originTweet"> {this.state.originTweet}</p>
       <h2>New Markov Tweet</h2>
-      <p className="originTweet"> {this.state.newMarkovTweet}</p>
+        <p className="originTweet"> {this.state.newMarkovTweet}</p>
+        <p>
+          <span className="saveTweet" onClick={this.storeTweetsInLocalStorage}> save new tweet</span>
+        </p>
+        <p>
+          <span className="saveTweet" onClick={this.printAllStoredLocalStorageTweets}> Print All saved tweets to Console Log</span>
+        </p>
     </div>
     );
   }
