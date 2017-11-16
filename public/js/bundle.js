@@ -1741,9 +1741,10 @@ var NameForm = function (_React$Component) {
           localStorage.removeItem("localStorageTest");
         } catch (e) {
           privateMode = false;
-          alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to join everyone");
+          alert("This broswer is currently in Private mode. Please use a browser that is not in Private mode in order to save tweets");
         }
       }
+
       if (privateMode) {
         var addMultiKeys = function addMultiKeys() {
           var keys = Object.keys(localStorage);
